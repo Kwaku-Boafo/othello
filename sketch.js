@@ -41,11 +41,13 @@ function draw(){
     line(0 , 599 , 600 , 599); //horizontal line 8 aka bottom boarder line
     
     // starting pieces 
-    blackDisc(263, 263);
+    whiteDisc(263, 263);
     blackDisc(338, 338);
-    //blackDisc(326, 326);
-    // whiteDisc(263, 263);
-    console.log(slots[0][0]);
+    blackDisc(263, 338);
+    whiteDisc(338, 263);
+    //console.log(slots[][]);
+
+    gameOver();
 }
 
 function blackDisc(x , y){
@@ -60,16 +62,19 @@ function whiteDisc(x , y){
 
 function mouseClicked(){
     mouseChecked(0 , 75 , 0 , 75 , 0 , 0);
+    mouseChecked(75, 150, 0 , 75 , 0 , 1);
 }
 
 function mouseChecked(num1 , num2 , num3 , num4 , i , j){
     if(mouseX > num1 && mouseX < num2 && mouseY > num3 && mouseY < num4 && turns % 2 == 0 && slots[i][j] == ""){
         blackDisc(num1 + 35 , num3 + 35);
         slots[i][j] = "black";
+        turns--;
     }
     if(mouseX > num1 && mouseX < num2 && mouseY > num3 && mouseY < num4 && turns % 2 == 1 && slots[i][j] == ""){
         whiteDisc(num1 + 35 , num3 - 35);
         slots[i][j] = "white";
+        turns--;
     }
     
 }
@@ -89,4 +94,23 @@ function scoreCounting(){
     }
     blackPieces = blackCounter;
     whitePieces = whiteCounter;
+}
+
+function gameOver(){
+    if(turns == 0 && blackPieces > whitePieces){
+        background("white");
+        textSize(32);
+        fill("black");
+        text("Black Discs: " + blackPieces , 300 , 75);
+        text("White Discs: " + whitePieces, 300 , 105);
+        text("Black Wins" , 300 , 155);
+    }
+    if(turns == 0 && whitePieces > blackPieces){
+        background("white");
+        textSize(32);
+        fill("black");
+        text("Black Discs: " + blackPieces , 300 , 75);
+        text("White Discs: " + whitePieces , 300 , 105);
+        text("White Wins" , 300 , 155);
+    }
 }
